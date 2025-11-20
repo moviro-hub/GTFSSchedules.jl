@@ -62,13 +62,15 @@ include("rules/field_enum_values.jl")
 include("rules/field_constraints.jl")
 include("rules/field_id_references.jl")
 include("reader.jl")
+
+# Export main types
+export GTFSSchedule
+
+# Export main functions
+export read_gtfs
+
+# submodule for validation
 include("validation/Validations.jl")
-
-# Export only essential functions and types
-export read_gtfs, GTFSSchedule
-
-# Validation functions are available through the Validations submodule
-# Import the submodule to make it accessible
 using .Validations
 
 end

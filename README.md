@@ -2,7 +2,7 @@
 
 [Documentation](https://moviro-hub.github.io/GTFSSchedules.jl)
 
-**A Julia package for reading and validating GTFS (General Transit Feed Specification) schedule data.**
+A Julia package for reading and validating GTFS (General Transit Feed Specification) schedule data.
 
 GTFS is the standard format for public transit data used by Google Maps, transit apps, and planning tools. This package provides a Julia implementation for reading GTFS schedule data and validating them. The validation largely uses rules generated from the official [GTFS specification](https://gtfs.org/documentation/schedule/reference/). The generation pipeline is included in this repository, making it easy to update rules when the specification changes.
 

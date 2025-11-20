@@ -1,5 +1,5 @@
-# CSV types (txt files)
 const GTFS_TYPES = Dict{Symbol, Type}(
+    # CSV types
     :ID => Union{String, Missing},
     :Enum => Union{Int64, Missing},
     :Timezone => Union{String, Missing},
@@ -19,6 +19,7 @@ const GTFS_TYPES = Dict{Symbol, Type}(
     :CurrencyCode => Union{String, Missing},
     :CurrencyAmount => Union{String, Missing},
     :Color => Union{String, Missing},
+    #  JSON types
     :Array => Union{Vector{String}, Missing},
     :Object => Union{Dict{String, Any}, Missing},
 )

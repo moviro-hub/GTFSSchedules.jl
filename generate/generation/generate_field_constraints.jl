@@ -24,7 +24,7 @@ function generate_field_constraints(extracted_constraints::Vector{FileConstraint
 
             # Create field constraint entry
             push!(lines, "        (")
-            field_sym = occursin(".", fieldname) ? ":( $fieldname )" : ":$fieldname"
+            field_sym = format_symbol(fieldname)
             push!(lines, "            field = $field_sym,")
             push!(lines, "            constraint = \"$constraint\",")
             push!(lines, "        ),")
@@ -34,7 +34,5 @@ function generate_field_constraints(extracted_constraints::Vector{FileConstraint
     end
 
     push!(lines, ")")
-    push!(lines, "")
-
     return lines
 end

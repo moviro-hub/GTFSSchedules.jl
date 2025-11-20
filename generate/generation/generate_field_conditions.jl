@@ -15,27 +15,25 @@ function generate_field_conditions(parsed_fields::Vector{FieldRules})
     push!(lines, "const FIELD_RULES = Dict(")
     for pf in parsed_fields
         fname = pf.filename
-        push!(lines, "  :$fname => [")
+        push!(lines, indent(":$fname => [", 1))
         for fr in pf.fields
             # Each entry: field, presence, required, forbidden, conditions
-            push!(lines, "        (")
-            field_sym = occursin(".", fr.field) ? ":( $(fr.field) )" : ":$(fr.field)"
-            push!(lines, "            field = $field_sym,")
-            push!(lines, "            presence = \"$(fr.presence)\",")
-            push!(lines, "            required = $(fr.required),")
-            push!(lines, "            forbidden = $(fr.forbidden),")
-            push!(lines, "            conditions = [")
+            push!(lines, indent("(", 2))
+            field_sym = format_symbol(fr.field)
+            push!(lines, indent("field = $field_sym,", 3))
+            push!(lines, indent("presence = \"$(fr.presence)\",", 3))
+            push!(lines, indent("required = $(fr.required),", 3))
+            push!(lines, indent("forbidden = $(fr.forbidden),", 3))
+            push!(lines, indent("conditions = [", 3))
             for c in fr.when_all_conditions
-                field_sym = occursin(".", c.field) ? ":( $(c.field) )" : ":$(c.field)"
-                push!(lines, "                (type = :field, file = :$(c.file), field = $field_sym, value = \"$(c.value)\"),")
+                cond_field_sym = format_symbol(c.field)
+                push!(lines, indent("(type = :field, file = :$(c.file), field = $cond_field_sym, value = \"$(c.value)\"),", 4))
             end
-            push!(lines, "            ],")
-            push!(lines, "        ),")
+            push!(lines, indent("],", 3))
+            push!(lines, indent("),", 2))
         end
-        push!(lines, "  ],")
+        push!(lines, indent("],", 1))
     end
     push!(lines, ")")
-    push!(lines, "")
-
     return lines
 end

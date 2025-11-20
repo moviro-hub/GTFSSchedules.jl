@@ -1,6 +1,6 @@
 # API Reference
 
-**Complete API documentation for GTFSSchedules.jl functions and types.**
+API documentation for GTFSSchedules.jl functions and types.
 
 ## Main Functions
 

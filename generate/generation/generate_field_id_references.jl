@@ -25,14 +25,14 @@ function generate_field_id_references(extracted_references::Vector{FileForeigns}
 
             # Create field reference entry
             push!(lines, "        (")
-            field_sym = occursin(".", fieldname) ? ":( $fieldname )" : ":$fieldname"
+            field_sym = format_symbol(fieldname)
             push!(lines, "            field = $field_sym,")
             push!(lines, "            references = [")
 
             for ref in references
                 push!(lines, "                (")
                 push!(lines, "                    table = :$(ref.table),")
-                ref_field_sym = occursin(".", ref.field) ? ":( $(ref.field) )" : ":$(ref.field)"
+                ref_field_sym = format_symbol(ref.field)
                 push!(lines, "                    field = $ref_field_sym,")
                 push!(lines, "                ),")
             end
@@ -46,7 +46,5 @@ function generate_field_id_references(extracted_references::Vector{FileForeigns}
     end
 
     push!(lines, ")")
-    push!(lines, "")
-
     return lines
 end

@@ -15,33 +15,32 @@ function generate_file_conditions(parsed_files::Vector{FileRules})
     for (i, pf) in enumerate(parsed_files)
         fname = pf.filename
         presence = pf.presence
-        push!(lines, "    :$fname => (")
-        push!(lines, "        presence = \"$presence\",")
-        push!(lines, "        relations = [")
+        push!(lines, indent(":$fname => (", 1))
+        push!(lines, indent("presence = \"$presence\",", 2))
+        push!(lines, indent("relations = [", 2))
         for fr in pf.conditions
             # Serialize a FileRule
             required = fr.required
             forbidden = fr.forbidden
-            push!(lines, "            (required = $(required), forbidden = $(forbidden), when_all = [")
+            push!(lines, indent("(", 3))
+            push!(lines, indent("required = $(required), forbidden = $(forbidden), when_all = [", 4))
             for c in fr.when_all_conditions
                 if isa(c, FileCondition)
-                    push!(lines, "                (type = :file, file = :$(c.file), must_exist = $(c.must_exist)),")
+                    push!(lines, indent("(type = :file, file = :$(c.file), must_exist = $(c.must_exist)),", 5))
                 elseif isa(c, FileFieldCondition)
-                    # normalize field symbol in emitted code by leaving it as a Symbol literal on read
-                    field_sym = occursin(".", c.field) ? ":( $(c.field) )" : ":$(c.field)"
-                    push!(lines, "                (type = :field, file = :$(c.file), field = $field_sym, value = \"$(c.value)\"),")
+                    field_sym = format_symbol(c.field)
+                    push!(lines, indent("(type = :field, file = :$(c.file), field = $field_sym, value = \"$(c.value)\"),", 5))
                 else
                     # Unknown condition -> no-op true guard in evaluator
-                    push!(lines, "                (type = :unknown),")
+                    push!(lines, indent("(type = :unknown),", 5))
                 end
             end
-            push!(lines, "            ]),")
+            push!(lines, indent("],", 4))
+            push!(lines, indent("),", 3))
         end
-        push!(lines, "        ],")
-        push!(lines, "    ),")
+        push!(lines, indent("],", 2))
+        push!(lines, indent("),", 1))
     end
     push!(lines, ")")
-    push!(lines, "")
-
     return lines
 end

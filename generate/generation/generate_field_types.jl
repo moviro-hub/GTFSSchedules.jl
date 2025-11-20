@@ -64,7 +64,7 @@ function generate_field_types(extracted_types::Vector{FileTypes})
 
     for file_type_info in extracted_types
         filename = file_type_info.filename
-        push!(lines, "  :$filename => [")
+        push!(lines, indent(":$filename => [", 1))
 
         for field_type_info in file_type_info.fields
             fieldname = field_type_info.fieldname
@@ -77,7 +77,7 @@ function generate_field_types(extracted_types::Vector{FileTypes})
 
             # Create field type entry
             push!(lines, "        (")
-            field_sym = occursin(".", fieldname) ? ":( $fieldname )" : ":$fieldname"
+            field_sym = format_symbol(fieldname)
             push!(lines, "            field = $field_sym,")
             push!(lines, "            gtfs_type = :$primary_gtfs_type,")
 
@@ -94,11 +94,9 @@ function generate_field_types(extracted_types::Vector{FileTypes})
             push!(lines, "        ),")
         end
 
-        push!(lines, "  ],")
+        push!(lines, indent("],", 1))
     end
 
     push!(lines, ")")
-    push!(lines, "")
-
     return lines
 end
