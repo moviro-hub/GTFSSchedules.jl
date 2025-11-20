@@ -1,6 +1,6 @@
 # GTFS Rule Generation
 
-**Auto-generates Julia validation code from the official GTFS specification.**
+Generates Julia validation code from the official GTFS specification.
 
 ## Usage
 

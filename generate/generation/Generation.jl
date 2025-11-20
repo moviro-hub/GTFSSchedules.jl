@@ -77,6 +77,18 @@ function indents(lines::Vector{String}, level::Int = 1)
 end
 
 """
+    format_symbol(identifier) -> String
+
+Render a value as a Julia symbol literal without introducing extra
+whitespace, while still supporting dotted identifiers via the `:(...)`
+syntax.
+"""
+function format_symbol(identifier)
+    name = String(identifier)
+    return occursin(".", name) ? ":($(name))" : ":$(name)"
+end
+
+"""
     format_julia_struct(struct_name::String, fields::Vector{String}) -> Vector{String}
 
 Format a Julia struct definition.

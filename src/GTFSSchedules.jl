@@ -50,6 +50,7 @@ module GTFSSchedules
 using DataFrames: DataFrames
 using CSV: CSV
 using GeoJSON: GeoJSON
+using .Validations
 
 const GTFSSchedule = Dict{Symbol, Union{DataFrames.DataFrame, Nothing}}
 
@@ -64,11 +65,10 @@ include("rules/field_id_references.jl")
 include("reader.jl")
 include("validation/Validations.jl")
 
-# Export only essential functions and types
-export read_gtfs, GTFSSchedule
+# Export main types
+export GTFSSchedule
 
-# Validation functions are available through the Validations submodule
-# Import the submodule to make it accessible
-using .Validations
+# Export main functions
+export read_gtfs
 
 end

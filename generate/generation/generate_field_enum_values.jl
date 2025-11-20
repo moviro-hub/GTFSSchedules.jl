@@ -17,7 +17,7 @@ function generate_field_enum_values(extracted_enums::Vector{FileEnums})
         push!(lines, "    :$(file_enum_info.filename) => [")
         for enum_field in file_enum_info.fields
             push!(lines, "        (")
-            field_sym = occursin(".", enum_field.field) ? ":( $(enum_field.field) )" : ":$(enum_field.field)"
+            field_sym = format_symbol(enum_field.field)
             push!(lines, "            field = $field_sym,")
             push!(lines, "            enum_values = [")
             for enum_val in enum_field.enum_values
@@ -51,7 +51,5 @@ function generate_field_enum_values(extracted_enums::Vector{FileEnums})
         push!(lines, "    ],")
     end
     push!(lines, ")")
-    push!(lines, "")
-
     return lines
 end

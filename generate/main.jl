@@ -188,10 +188,10 @@ function main()
         ingested_data = ingest_specification(spec_file, tmp_dir)
         extracted_data = extract_rules(ingested_data, tmp_dir)
         generate_source_files(extracted_data)
-        println("✓ All steps completed")
+        println("✓ All steps completed successfully")
         return nothing
     catch e
-        println("❌ Error occurred during GTFS specification processing:")
+        println("✗ Error occurred during GTFS specification processing:")
         println("   Error: $e")
         println("   Stack trace:")
         for (exc, bt) in Base.catch_stack()
